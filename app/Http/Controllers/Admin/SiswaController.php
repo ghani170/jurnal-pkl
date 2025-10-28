@@ -15,7 +15,7 @@ class SiswaController extends Controller
 {
     public function index()
     {
-        $siswa = User::where('role', 'siswa')->get();
+        $siswa = Siswa::with('user', 'kelas', 'jurusan', 'dudi', 'pembimbing')->get();
         
         return view('admin.kelolasiswa.kelolasiswa', compact('siswa'));
     }

@@ -18,8 +18,8 @@ return new class extends Migration
             $table->time('mulai_kegiatan');
             $table->time('akhir_kegiatan');
             $table->text('keterangan_kegiatan');
-            $table->string('dokumentasi');
-            $table->text('catatan_pembimbing');
+            $table->string('dokumentasi')->nullable();
+            $table->text('catatan_pembimbing')->nullable();
 
             $table->timestamps();
         });

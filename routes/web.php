@@ -9,6 +9,7 @@ use App\Http\Controllers\AdminController;
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\Siswa\DashboardSiswaController;
+use App\Http\Controllers\Siswa\KegiatanController;
 use App\Http\Controllers\Siswa\ProfilSIswaController;
 use Illuminate\Support\Facades\Route;
 
@@ -39,6 +40,8 @@ Route::prefix('siswa')->name('siswa.')->middleware(['auth', 'role:siswa'])->grou
     Route::get('/dashboard', [DashboardSiswaController::class, 'index'])->name('dashboard');
 
     Route::resource('profil', ProfilSIswaController::class);
+
+    Route::resource('kegiatan', KegiatanController::class);
 });
 
 Route::middleware('guest')->group(function () {

@@ -26,19 +26,19 @@
       <tbody>
         <tr>
           <td class="align-middle text-center text-sm">
-            {{ $data->name }}
+            {{ $data->user->name }}
           </td>
           <td class="align-middle text-center text-sm">
-            {{ $data->email }}
+            {{ $data->user->email }}
           </td>
           <td class="align-middle text-center text-sm">
             {{ $data->created_at->format('d/m/Y H:i') }}
           </td>
           <td class="align-middle text-center d-flex gap-2 justify-content-center align-items-center">
-            <a href="{{ route('admin.siswa.edit', $data->id) }}" class="text-black font-weight-bold text-xs btn btn-warning" data-toggle="tooltip" data-original-title="Edit user">
+            <a href="{{ route('admin.siswa.edit', $data->user->id) }}" class="text-black font-weight-bold text-xs btn btn-warning" data-toggle="tooltip" data-original-title="Edit user">
               Edit
             </a>
-            <form action="{{ route('admin.siswa.destroy', $data->id) }}"
+            <form action="{{ route('admin.siswa.destroy', $data->user->id) }}"
               method="POST"
               onsubmit="return confirm('Yakin ingin menghapus produk ini?')"
               style="display:inline;">

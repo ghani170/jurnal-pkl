@@ -115,6 +115,13 @@
             <span class="nav-link-text ms-1">Kelola Profil</span>
           </a>
         </li>
+        <li class="nav-item">
+          <a class="nav-link text-dark" href="{{ route('siswa.kegiatan.index') }}">
+            <i class="material-symbols-rounded opacity-5">co_present</i>
+            <span class="nav-link-text ms-1">Kelola Kegiatan</span>
+          </a>
+        </li>
+
         @endif
         
         <li class="nav-item">
