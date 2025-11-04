@@ -16,7 +16,7 @@
 <html lang="en">
 
 <head>
-  <meta charset="utf-8" />
+  <meta charset="utf-8" name="csrf-token" content="{{ csrf_token() }}" />
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <link rel="apple-touch-icon" sizes="76x76" href="/assets/img/apple-icon.png">
   <link rel="icon" type="image/png" href="/assets/img/favicon.png">
@@ -89,7 +89,8 @@
         </li>
 
         <li class="nav-item">
-          <a class="nav-link text-dark" href="{{ route('admin.jurusan.index') }}">
+          <a href="{{ route('admin.jurusan.index') }}"
+                class="nav-link text-dark {{ request()->routeIs('admin.jurusan.index*') ? 'active bg-gradient-dark text-white' : '' }}">
             <i class="material-symbols-rounded opacity-5">receipt_long</i>
             <span class="nav-link-text ms-1">Kelola Jurusan</span>
           </a>
@@ -106,9 +107,27 @@
             <span class="nav-link-text ms-1">Kelola Dudi</span>
           </a>
         </li>
+        <li class="nav-item">
+          <a class="nav-link text-dark" href="{{ route('admin.kegiatan.index') }}">
+            <i class="material-symbols-rounded opacity-5">co_present</i>
+            <span class="nav-link-text ms-1">Kelola Kegiatan</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link text-dark" href="{{ route('admin.absensi.index') }}">
+            <i class="material-symbols-rounded opacity-5">co_present</i>
+            <span class="nav-link-text ms-1">Kelola Absensi</span>
+          </a>
+        </li>
         @endif
 
         @if (Auth::user() && Auth::user()->role === 'siswa')
+        <li class="nav-item">
+          <a class="nav-link active bg-gradient-dark text-white" href="{{ route('siswa.dashboard') }}">
+            <i class="material-symbols-rounded opacity-5">dashboard</i>
+            <span class="nav-link-text ms-1">Dashboard</span>
+          </a>
+        </li>
         <li class="nav-item">
           <a class="nav-link text-dark" href="{{ route('siswa.profil.index') }}">
             <i class="material-symbols-rounded opacity-5">co_present</i>
@@ -119,6 +138,12 @@
           <a class="nav-link text-dark" href="{{ route('siswa.kegiatan.index') }}">
             <i class="material-symbols-rounded opacity-5">co_present</i>
             <span class="nav-link-text ms-1">Kelola Kegiatan</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link text-dark" href="{{ route('siswa.absensi.index') }}">
+            <i class="material-symbols-rounded opacity-5">co_present</i>
+            <span class="nav-link-text ms-1">Absensi</span>
           </a>
         </li>
 

@@ -1,13 +1,16 @@
 <?php
 
+use App\Http\Controllers\Admin\AbsensiController as AdminAbsensiController;
 use App\Http\Controllers\Admin\DudiController;
 use App\Http\Controllers\Admin\JurusanController;
+use App\Http\Controllers\Admin\KegiatanController as AdminKegiatanController;
 use App\Http\Controllers\Admin\KelasController;
 use App\Http\Controllers\Admin\PembimbingController;
 use App\Http\Controllers\Admin\SiswaController;
 use App\Http\Controllers\AdminController;
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\Siswa\AbsensiController;
 use App\Http\Controllers\Siswa\DashboardSiswaController;
 use App\Http\Controllers\Siswa\KegiatanController;
 use App\Http\Controllers\Siswa\ProfilSIswaController;
@@ -34,14 +37,26 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'role:admin'])->grou
 
     //Kelola Dudi
     Route::resource('dudi', DudiController::class);
+
+    //Kelola Kegiatan
+    Route::resource('kegiatan', AdminKegiatanController::class);
+
+    //Kelola Absensi
+    Route::resource('absensi', AdminAbsensiController::class);
 });
 
 Route::prefix('siswa')->name('siswa.')->middleware(['auth', 'role:siswa'])->group(function () {
+    Route::get('/absensi/get-by-date/', [AbsensiController::class, 'getByDate'])
+        ->name('absensi.getByDate');
     Route::get('/dashboard', [DashboardSiswaController::class, 'index'])->name('dashboard');
 
     Route::resource('profil', ProfilSIswaController::class);
 
     Route::resource('kegiatan', KegiatanController::class);
+    Route::resource('absensi', AbsensiController::class);
+    
+    Route::get('/siswa/absensi', [AbsensiController::class, 'index'])->name('siswa.absensi.index');
+
 });
 
 Route::middleware('guest')->group(function () {
@@ -52,4 +67,4 @@ Route::middleware('guest')->group(function () {
     Route::post('/login', [AuthController::class, 'login'])->name('login.store');
 });
 
-Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+Route::post('/logout', [AuthController::class, 'logout'])->name('logout')->middleware('auth');

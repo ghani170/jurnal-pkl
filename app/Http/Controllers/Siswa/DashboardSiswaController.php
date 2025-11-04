@@ -3,7 +3,10 @@
 namespace App\Http\Controllers\Siswa;
 
 use App\Http\Controllers\Controller;
+use App\Models\Absensi;
+use App\Models\Kegiatan;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class DashboardSiswaController extends Controller
 {
@@ -12,7 +15,9 @@ class DashboardSiswaController extends Controller
      */
     public function index()
     {
-        return view('siswa.dashboard');
+        $totalKegiatan = Kegiatan::where('id_siswa', Auth::user()->siswa->id)->count();
+        $totalAbsensi = Absensi::where('id_siswa', Auth::user()->siswa->id)->count();
+        return view('siswa.dashboard', compact('totalKegiatan', 'totalAbsensi'));
     }
 
     /**

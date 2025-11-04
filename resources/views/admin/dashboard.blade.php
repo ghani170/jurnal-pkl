@@ -25,9 +25,9 @@
           </div>
         </div>
         <hr class="dark horizontal my-0">
-        <!-- <div class="card-footer p-2 ps-3">
-          <p class="mb-0 text-sm"><span class="text-success font-weight-bolder">+55% </span>than last week</p>
-        </div> -->
+        <div class="card-footer p-2 ps-3">
+          <p class="mb-0 text-sm"><span class="text-success font-weight-bolder"></span><a href="{{ route('admin.kelas.index') }}">Lihat Kelas</a></p>
+        </div>
       </div>
     </div>
     <div class="col-xl-3 col-sm-6 mb-xl-0 mb-4">
@@ -44,9 +44,9 @@
           </div>
         </div>
         <hr class="dark horizontal my-0">
-        <!-- <div class="card-footer p-2 ps-3">
-          <p class="mb-0 text-sm"><span class="text-success font-weight-bolder">+3% </span>than last month</p>
-        </div> -->
+        <div class="card-footer p-2 ps-3">
+          <p class="mb-0 text-sm"><span class="text-success font-weight-bolder"></span><a href="{{ route('admin.siswa.index') }}">Lihat Siswa</a></p>
+        </div>
       </div>
     </div>
     <div class="col-xl-3 col-sm-6 mb-xl-0 mb-4">
@@ -63,9 +63,9 @@
           </div>
         </div>
         <hr class="dark horizontal my-0">
-        <!-- <div class="card-footer p-2 ps-3">
-          <p class="mb-0 text-sm"><span class="text-danger font-weight-bolder">-2% </span>than yesterday</p>
-        </div> -->
+        <div class="card-footer p-2 ps-3">
+          <p class="mb-0 text-sm"><span class="text-danger font-weight-bolder"></span><a href="{{ route('admin.pembimbing.index') }}">Lihat Pembimbing</a></p>
+        </div>
       </div>
     </div>
     <div class="col-xl-3 col-sm-6">
@@ -82,9 +82,9 @@
           </div>
         </div>
         <hr class="dark horizontal my-0">
-        <!-- <div class="card-footer p-2 ps-3">
-          <p class="mb-0 text-sm"><span class="text-success font-weight-bolder">+5% </span>than yesterday</p>
-        </div> -->
+        <div class="card-footer p-2 ps-3">
+          <p class="mb-0 text-sm"><span class="text-success font-weight-bolder"></span><a href="{{ route('admin.dudi.index') }}">Lihat Dudi</a></p>
+        </div>
       </div>
     </div>
   </div>

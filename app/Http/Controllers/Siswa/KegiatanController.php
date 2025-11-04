@@ -14,7 +14,7 @@ class KegiatanController extends Controller
      */
     public function index()
     {
-        $user = auth()->user();
+        $user = Auth::user();
         
         $siswa = $user->siswa;
         $kegiatan = $siswa->kegiatan;
