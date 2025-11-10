@@ -46,7 +46,7 @@ class AbsensiController extends Controller
                     'tanggal_absen' => $item->tanggal_absen,
                     'status' => $item->status,
                     'jam_mulai' => $item->jam_mulai,
-                    'jam_selesai' => $item->jam_selesai,
+                    'jam_akhir' => $item->jam_akhir,
                     'keterangan' => $item->keterangan,
                     'warna' => $warna,
                 ];
@@ -74,9 +74,9 @@ class AbsensiController extends Controller
     {
         $request->validate([
             'tanggal_absen' => 'required|date',
-            'status' => 'required|in:Hadir,Izin,Sakit',
+            'status' => 'required|in:Hadir,Izin,Sakit,Libur,Alpha',
             'jam_mulai' => 'nullable|date_format:H:i',
-            'jam_selesai' => 'nullable|date_format:H:i',
+            'jam_akhir' => 'nullable|date_format:H:i',
             'keterangan' => 'nullable|string',
         ]);
 
@@ -93,7 +93,7 @@ class AbsensiController extends Controller
             $absen->update([
                 'status' => $request->status,
                 'jam_mulai' => $request->status === 'Hadir' ? $request->jam_mulai : null,
-                'jam_selesai' => $request->status === 'Hadir' ? $request->jam_selesai : null,
+                'jam_akhir' => $request->status === 'Hadir' ? $request->jam_akhir : null,
                 'keterangan' => $request->filled('keterangan') ? $request->keterangan : null,
             ]);
         } else {
@@ -102,7 +102,7 @@ class AbsensiController extends Controller
                 'tanggal_absen' => $request->tanggal_absen,
                 'status' => $request->status,
                 'jam_mulai' => $request->status === 'Hadir' ? $request->jam_mulai : null,
-                'jam_selesai' => $request->status === 'Hadir' ? $request->jam_selesai : null,
+                'jam_akhir' => $request->status === 'Hadir' ? $request->jam_akhir : null,
                 'keterangan' => $request->filled('keterangan') ? $request->keterangan : null,
             ]);
         }
