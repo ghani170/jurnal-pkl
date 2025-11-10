@@ -72,13 +72,18 @@ class AbsensiController extends Controller
      */
     // ... dalam AbsensiController.php
 
+    /**
+     * Store a newly created resource in storage.
+     */
+    /**
+     * Store a newly created resource in storage.
+     */
     public function store(Request $request)
     {
-        // 1. Validasi: Status dibuat nullable untuk memungkinkan update jam saja
+        // 1. Validasi
         $request->validate([
             'tanggal_absen' => 'required|date',
-            // Ubah status menjadi nullable
-            'status' => 'nullable|in:hadir,izin,sakit,libur,alpha',
+            'status' => 'nullable|in:hadir,izin,sakit,libur,alpha', 
             'jam_mulai' => 'nullable|date_format:H:i',
             'jam_akhir' => 'nullable|date_format:H:i',
             'keterangan' => 'nullable|string',
@@ -86,7 +91,7 @@ class AbsensiController extends Controller
 
         $siswa = Auth::user()->siswa;
 
-        // Cari data absensi yang sudah ada
+        // Cari data absensi yang sudah ada untuk hari ini
         $absen = Absensi::where('id_siswa', $siswa->id)
             ->whereDate('tanggal_absen', $request->tanggal_absen)
             ->first();
@@ -95,62 +100,79 @@ class AbsensiController extends Controller
 
         if ($absen) {
             // KASUS 1: Data Absensi SUDAH ADA (Update)
+            $statusDB = strtolower($absen->status); 
+            $dataToUpdate = [];
 
-            // A. Update Jam (Dilakukan jika status sudah Hadir)
-            // Kita hanya melakukan update jam jika statusnya memang 'Hadir' dan jam dikirimkan
-            // ... dalam AbsensiController.php
+            // A. Update Jam (Hanya dilakukan jika status di DB adalah 'hadir')
+            if ($statusDB === 'hadir') {
+                
+                // Jika $request->jam_mulai terisi, gunakan nilainya. 
+                // Jika string kosong (''), gunakan nilai lama dari DB.
+                // Jika tidak ada dalam request (misal tidak ada di form), gunakan nilai lama dari DB.
+                
+                // Gunakan $request->get() untuk mengambil nilai, string kosong ('') akan tetap menjadi string kosong
+                $jamMulaiRequest = $request->get('jam_mulai');
+                $jamAkhirRequest = $request->get('jam_akhir');
+                
+                // Logika utama: Pertahankan nilai lama jika request kosong/null
+                $jamMulaiBaru = ($jamMulaiRequest === null || $jamMulaiRequest === '') 
+                                ? $absen->jam_mulai 
+                                : $jamMulaiRequest;
+                
+                $jamAkhirBaru = ($jamAkhirRequest === null || $jamAkhirRequest === '') 
+                                ? $absen->jam_akhir 
+                                : $jamAkhirRequest;
 
-            // A. Update Jam (Dilakukan jika status sudah Hadir)
-            if ($absen->status === 'hadir' && ($request->filled('jam_mulai') || $request->filled('jam_akhir') || $request->has('jam_mulai') || $request->has('jam_akhir'))) {
-                // UBAH KE HURUF KECIL
+                // Cek apakah ada perubahan (pastikan kedua nilai berbeda sebelum update)
+                $isJamMulaiChanged = ($jamMulaiBaru !== $absen->jam_mulai);
+                $isJamAkhirChanged = ($jamAkhirBaru !== $absen->jam_akhir);
 
-                // Gunakan operator ternary untuk mengubah string kosong menjadi null
-                $jamMulai = $request->jam_mulai ? $request->jam_mulai : null;
-                $jamAkhir = $request->jam_akhir ? $request->jam_akhir : null;
-
-                // Lakukan update HANYA jika setidaknya salah satu jam terisi (atau kita biarkan null jika kosong)
-                if ($jamMulai || $jamAkhir) {
-                    $absen->update([
-                        'jam_mulai' => $jamMulai,
-                        'jam_akhir' => $jamAkhir,
-                        // Status dan Keterangan tidak diubah
-                    ]);
+                if ($isJamMulaiChanged || $isJamAkhirChanged) {
+                    $dataToUpdate['jam_mulai'] = $jamMulaiBaru;
+                    $dataToUpdate['jam_akhir'] = $jamAkhirBaru;
+                    
+                    // Lakukan Update
+                    $absen->update($dataToUpdate);
                     return redirect()->back()->with('success', 'Jam absensi berhasil diperbarui.');
                 }
-                // Jika tidak ada jam yang dikirimkan meskipun HadirBox aktif, biarkan saja (jangan update)
-                return redirect()->back()->with('warning', 'Tidak ada nilai jam yang dikirim untuk diperbarui.')->withInput();
             }
 
-            // B. Update Status (Dilakukan jika status baru dikirim melalui radio)
-            if ($request->filled('status') && $request->status !== $absen->status) {
-                // Ini adalah perubahan status (misal dari Hadir ke Izin/Sakit, atau sebaliknya)
+
+            // B. Update Status (Dilakukan jika status baru dikirim melalui radio dan berbeda)
+            if ($request->filled('status') && $request->status !== $statusDB) {
+                
                 $absen->update([
                     'status' => $request->status,
-                    'jam_mulai' => $request->status === 'hadir' ? $request->jam_mulai : null, // UBAH KE HURUF KECIL
-                    'jam_akhir' => $request->status === 'hadir' ? $request->jam_akhir : null,   // UBAH KE HURUF KECIL
-                    'keterangan' => ($request->status === 'izin' || $request->status === 'sakit') ? $request->keterangan : null, // UBAH KE HURUF KECIL
+                    
+                    // Reset jam jika status berubah dari 'hadir' ke yang lain (izin/sakit)
+                    // Atau isi jam jika status berubah menjadi 'hadir'
+                    'jam_mulai' => $request->status === 'hadir' ? $request->jam_mulai : null, 
+                    'jam_akhir' => $request->status === 'hadir' ? $request->jam_akhir : null,  
+                    
+                    'keterangan' => ($request->status === 'izin' || $request->status === 'sakit') ? $request->keterangan : null,
                 ]);
                 return redirect()->back()->with('success', 'Status absensi berhasil diperbarui.');
             }
 
-            // Jika tidak ada perubahan yang signifikan dikirim (misalnya hanya klik submit tanpa mengisi apa-apa)
+            // Jika tidak ada perubahan jam maupun status yang terdeteksi
             return redirect()->back()->with('warning', 'Tidak ada data yang diperbarui.')->withInput();
+            
         } else {
             // KASUS 2: Data Absensi BELUM ADA (Create Baru)
 
-            // Saat pertama kali submit, kita hanya butuh status. Jam bisa diabaikan.
             if (!$request->filled('status')) {
                 return redirect()->back()->with('error', 'Silakan pilih status absensi.')->withInput();
             }
+            
+            $statusToSave = ucfirst($request->status); 
 
             Absensi::create([
                 'id_siswa' => $siswa->id,
                 'tanggal_absen' => $request->tanggal_absen,
-                'status' => $request->status,
-                // Saat Create, jam_mulai/akhir akan null jika sesuai logika view Anda (saat pilih Hadir pertama kali)
-                'jam_mulai' => $request->status === 'hadir' ? $request->jam_mulai : null, // UBAH KE HURUF KECIL
-                'jam_akhir' => $request->status === 'hadir' ? $request->jam_akhir : null,   // UBAH KE HURUF KECIL
-                // ...
+                'status' => $statusToSave, 
+                // Saat CREATE, jam_mulai/akhir di set NULL kecuali sudah diisi di form awal
+                'jam_mulai' => $request->status === 'hadir' && $request->filled('jam_mulai') ? $request->jam_mulai : null, 
+                'jam_akhir' => $request->status === 'hadir' && $request->filled('jam_akhir') ? $request->jam_akhir : null,  
                 'keterangan' => $request->filled('keterangan') ? $request->keterangan : null,
             ]);
 
