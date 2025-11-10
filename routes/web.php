@@ -10,6 +10,7 @@ use App\Http\Controllers\Admin\SiswaController;
 use App\Http\Controllers\AdminController;
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\Pembimbing\DashboardPembimbingController;
 use App\Http\Controllers\Siswa\AbsensiController;
 use App\Http\Controllers\Siswa\DashboardSiswaController;
 use App\Http\Controllers\Siswa\KegiatanController;
@@ -46,18 +47,28 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'role:admin'])->grou
 });
 
 Route::prefix('siswa')->name('siswa.')->middleware(['auth', 'role:siswa'])->group(function () {
-    Route::get('/absensi/get-by-date/', [AbsensiController::class, 'getByDate'])
-        ->name('absensi.getByDate');
+
+
     Route::get('/dashboard', [DashboardSiswaController::class, 'index'])->name('dashboard');
-
+    // Profil & Kegiatan
     Route::resource('profil', ProfilSIswaController::class);
-
     Route::resource('kegiatan', KegiatanController::class);
+
+    // Absensi
     Route::resource('absensi', AbsensiController::class);
-    
-    Route::get('/siswa/absensi', [AbsensiController::class, 'index'])->name('siswa.absensi.index');
+    Route::get('kegiatan/per-bulan', [KegiatanController::class, 'perBulan'])
+    ->name('kegiatan.perBulan');
+
+   
 
 });
+Route::prefix('pembimbing')->name('pembimbing.')->middleware(['auth', 'role:pembimbing'])->group(function () {
+    Route::get('/dashboard', [DashboardPembimbingController::class, 'index'])->name('dashboard');
+
+});
+
+
+ 
 
 Route::middleware('guest')->group(function () {
     Route::get('/', function () {

@@ -14,29 +14,29 @@
         <form action="{{ route('siswa.kegiatan.store') }}" method="POST" enctype="multipart/form-data">
             @csrf
 
-            <div class="input-group input-group-outline my-3 is-filled">
-                <label class="form-label">Tanggal Kegiatan</label>
-                <input type="date" name="tanggal_kegiatan" class="form-control" required>
+            <div class="mb-3">
+                <label class="form-label fw-semibold">Tanggal Kegiatan</label>
+                <input type="date" name="tanggal_kegiatan" class="form-control p-2 border" required>
             </div>
 
-            <div class="input-group input-group-outline my-3 is-filled">
-                <label class="form-label">Mulai Kegiatan</label>
-                <input type="time" name="mulai_kegiatan" class="form-control" required>
+            <div class="mb-3">
+                <label class="form-label fw-bold">Mulai Kegiatan</label>
+                <input type="time" name="mulai_kegiatan" class="form-control p-2 border" required>
             </div>
 
-            <div class="input-group input-group-outline my-3 is-filled">
+            <div class="form-label fw-bold">
                 <label class="form-label">Akhir Kegiatan</label>
-                <input type="time" name="akhir_kegiatan" class="form-control" required>
+                <input type="time" name="akhir_kegiatan" class="form-control p-2 border" required>
             </div>
 
-            <div class="input-group input-group-outline my-3 is-filled">
+            <div class="form-label fw-bold">
                 <label class="form-label">Dokumentasi</label>
-                <input type="file" name="dokumentasi" class="form-control">
+                <input type="file" name="dokumentasi" class="form-control p-2 border">
             </div>
 
-            <div class="input-group input-group-outline my-3 is-filled">
+            <div class="form-label fw-bold">
                 <label class="form-label">Keterangan Kegiatan</label>
-                <textarea name="keterangan_kegiatan" class="form-control" rows="3" required></textarea>
+                <textarea name="keterangan_kegiatan" class="form-control p-2 border" rows="3" required></textarea>
             </div>
 
             <div class="d-flex gap-3">

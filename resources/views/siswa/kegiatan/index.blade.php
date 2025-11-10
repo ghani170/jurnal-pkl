@@ -12,6 +12,32 @@
                 <a href="{{ route('siswa.kegiatan.create') }}" class="btn bg-gradient-dark">Tambah kegiatan</a>
             </div>
 
+            <form action="{{ route('siswa.kegiatan.index') }}" method="GET" class="mb-4 d-flex gap-2 align-items-center">
+                <div>
+                    <select name="bulan" class="form-select">
+                        <option value="">-- Pilih Bulan --</option>
+                        @foreach(range(1, 12) as $bulan)
+                            <option value="{{ $bulan }}" {{ request('bulan') == $bulan ? 'selected' : '' }}>
+                                {{ \Carbon\Carbon::create()->month($bulan)->translatedFormat('F') }}
+                            </option>
+                        @endforeach
+                    </select>
+                </div>
+                <div>
+                    <select name="tahun" class="form-select">
+                        <option value="">-- Pilih Tahun --</option>
+                        @foreach(range(date('Y'), date('Y') - 5) as $tahun)
+                            <option value="{{ $tahun }}" {{ request('tahun') == $tahun ? 'selected' : '' }}>
+                                {{ $tahun }}
+                            </option>
+                        @endforeach
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-dark">Filter</button>
+                <a href="{{ route('siswa.kegiatan.index') }}" class="btn btn-secondary">Reset</a>
+            </form>
+
+
             @foreach ($kegiatan as $ktn)
                 <div class="col-md-4 mb-4">
                     <div class="card shadow-sm border-0 rounded-3 hover:shadow-lg transition-all">
@@ -53,7 +79,8 @@
                                     <div class="d-flex align-items-start justify-content-between">
                                         <div>
                                             <p class="text-sm text-muted mb-2">
-                                                <i class="material-symbols-rounded text-secondary me-1" style="font-size: 18px;">comment</i>
+                                                <i class="material-symbols-rounded text-secondary me-1"
+                                                    style="font-size: 18px;">comment</i>
                                                 <strong>Catatan Pembimbing:</strong>
                                             </p>
                                             <p class="text-sm text-dark mb-0">
@@ -63,8 +90,7 @@
                                     </div>
 
                                     <div class="text-end mt-2">
-                                        <a href="{{ route('siswa.kegiatan.show', $ktn->id) }}" 
-                                           class="text-secondary text-sm">
+                                        <a href="{{ route('siswa.kegiatan.show', $ktn->id) }}" class="text-secondary text-sm">
                                             <i class="material-symbols-rounded" style="font-size: 16px;">open_in_new</i>
                                             Lihat Detail
                                         </a>
@@ -77,8 +103,8 @@
                             @endif
 
                             {{-- Tombol detail kegiatan --}}
-                            <a href="{{ route('siswa.kegiatan.show', $ktn->id) }}" 
-                               class="btn btn-sm bg-gradient-light w-100 mb-2">
+                            <a href="{{ route('siswa.kegiatan.show', $ktn->id) }}"
+                                class="btn btn-sm bg-gradient-light w-100 mb-2">
                                 <i class="material-symbols-rounded me-1">info</i> Detail Kegiatan
                             </a>
 
@@ -89,10 +115,12 @@
                                 </span>
 
                                 <div class="d-flex gap-2">
-                                    <a style="position: relative; top:7px;" href="{{ route('siswa.kegiatan.edit', $ktn->id) }}" class="btn btn-warning">
+                                    <a style="position: relative; top:7px;" href="{{ route('siswa.kegiatan.edit', $ktn->id) }}"
+                                        class="btn btn-warning">
                                         <i class="material-symbols-rounded">edit</i>
                                     </a>
-                                    <form action="{{ route('siswa.kegiatan.destroy', $ktn->id) }}" method="POST" class="d-inline">
+                                    <form action="{{ route('siswa.kegiatan.destroy', $ktn->id) }}" method="POST"
+                                        class="d-inline">
                                         @csrf @method('DELETE')
                                         <button style="position: relative; top:7px;" type="submit" class="btn btn-danger"
                                             onclick="return confirm('Hapus kegiatan ini?')">

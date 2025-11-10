@@ -5,98 +5,140 @@ namespace App\Http\Controllers\Siswa;
 use App\Http\Controllers\Controller;
 use App\Models\Absensi;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class AbsensiController extends Controller
 {
-    public function index(Request $request)
+    public function absensiAdmin(Request $request)
     {
-        $user = auth()->user();
-        $siswa = $user->siswa;
+        $absensi = Absensi::with('siswa')->get();
+        return view('admin.absensis.absensi', compact('absensi'));
+    }
+    
+    public function absensiPembimbing(Request $request)
+    {
+        $absensi = Absensi::with('siswa')->get();
+        return view('pembimbing.absensis.absensi', compact('absensi'));
+    }
 
-        // Ambil semua absensi milik siswa
-        $absens = $siswa->absensi;
 
-        // Format data untuk FullCalendar
-        $events = $absens->map(function ($absen) {
-            return [
-                'id' => $absen->id,
-                'title' => ucfirst($absen->status),
-                'start' => $absen->tanggal_absen,
-                'color' => match ($absen->status) {
-                    'hadir' => '#28a745',
-                    'izin' => '#ffc107',
-                    'sakit' => '#17a2b8',
-                    'alpha' => '#dc3545',
+    /**
+     * Display a listing of the resource.
+     */
+    public function index()
+    {
+        $siswa = Auth::user()->siswa;
+
+        // Ambil semua absensi milik siswa yang login
+        $absensi = Absensi::where('id_siswa', $siswa->id)
+            ->select('tanggal_absen', 'status', 'jam_mulai', 'jam_akhir', 'keterangan')
+            ->get()
+            ->map(function ($item) {
+                // Tentukan warna badge sesuai status
+                $warna = match ($item->status) {
+                    'Hadir' => '#28a745',
+                    'Izin' => '#007bff',
+                    'Sakit' => '#dc3545',
                     default => '#6c757d',
-                },
-            ];
-        });
+                };
 
-        // Jika request AJAX (FullCalendar)
-        if ($request->ajax() || $request->has('ajax')) {
-            return response()->json($events);
-        }
+                return [
+                    'tanggal_absen' => $item->tanggal_absen,
+                    'status' => $item->status,
+                    'jam_mulai' => $item->jam_mulai,
+                    'jam_selesai' => $item->jam_selesai,
+                    'keterangan' => $item->keterangan,
+                    'warna' => $warna,
+                ];
+            });
 
-
-        // Render view utama
-        return view('siswa.absensi.index',compact('events'));
+        return view("siswa.absensi.index", [
+            'absensi' => $absensi
+        ]);
     }
 
-    public function getByDate(Request $request)
+
+
+    /**
+     * Show the form for creating a new resource.
+     */
+    public function create()
     {
-        $tanggal = $request->input('tanggal');
-        $user = auth()->user();
-
-        $siswa = $user->siswa;
-        $idSiswa = $siswa->id_siswa ?? null; 
-
-        if (!$idSiswa) {
-            return response()->json(['error' => 'Siswa tidak ditemukan.'], 404);
-        }
-
-        $absen = Absensi::where('id_siswa', $idSiswa)
-            ->whereDate('tanggal_absen', $tanggal)
-            ->first();
-
-        if ($absen) {
-            return response()->json([
-                'status' => $absen->status,
-                'keterangan' => $absen->keterangan,
-                'tanggal_absen' => $absen->tanggal_absen,
-                'jam_mulai' => $absen->jam_mulai,
-                'jam_akhir' => $absen->jam_akhir,
-            ]);
-        }
-
-        return response()->json(null);
+        //
     }
 
+    /**
+     * Store a newly created resource in storage.
+     */
     public function store(Request $request)
     {
         $request->validate([
             'tanggal_absen' => 'required|date',
-            'status' => 'required|in:hadir,sakit,izin,alpha',
+            'status' => 'required|in:Hadir,Izin,Sakit',
+            'jam_mulai' => 'nullable|date_format:H:i',
+            'jam_selesai' => 'nullable|date_format:H:i',
             'keterangan' => 'nullable|string',
         ]);
 
-        $siswa = auth()->user()->siswa ?? null;
-        if (!$siswa) {
-            return response()->json(['error' => 'Data siswa tidak ditemukan'], 404);
+        // Ambil user login (siswa)
+        $siswa = Auth::user()->siswa;
+
+        // Cek apakah sudah absen di tanggal itu
+        $absen = Absensi::where('id_siswa', $siswa->id)
+            ->whereDate('tanggal_absen', $request->tanggal_absen)
+            ->first();
+
+        // Jika sudah ada → update, kalau belum → buat baru
+        if ($absen) {
+            $absen->update([
+                'status' => $request->status,
+                'jam_mulai' => $request->status === 'Hadir' ? $request->jam_mulai : null,
+                'jam_selesai' => $request->status === 'Hadir' ? $request->jam_selesai : null,
+                'keterangan' => $request->filled('keterangan') ? $request->keterangan : null,
+            ]);
+        } else {
+            Absensi::create([
+                'id_siswa' => $siswa->id,
+                'tanggal_absen' => $request->tanggal_absen,
+                'status' => $request->status,
+                'jam_mulai' => $request->status === 'Hadir' ? $request->jam_mulai : null,
+                'jam_selesai' => $request->status === 'Hadir' ? $request->jam_selesai : null,
+                'keterangan' => $request->filled('keterangan') ? $request->keterangan : null,
+            ]);
         }
 
-        Absensi::updateOrCreate(
-            [
-                'tanggal_absen' => $request->tanggal_absen,
-                'id_siswa' => $siswa->id, // 
-            ],
-            [
-                'jam_mulai' => now()->format('H:i'),
-                'jam_akhir' => now()->format('H:i'),
-                'status' => $request->status,
-                'keterangan' => $request->keterangan,
-            ]
-        );
+        return redirect()->back()->with('success', 'Absensi berhasil disimpan.');
+    }
 
-        return response()->json(['success' => true]);
+    /**
+     * Display the specified resource.
+     */
+    public function show(string $id)
+    {
+        //
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     */
+    public function edit(string $id)
+    {
+        //
+    }
+
+    /**
+     * Update the specified resource in storage.
+     */
+    public function update(Request $request, string $id)
+    {
+        //
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     */
+    public function destroy(string $id)
+    {
+        //
     }
 }

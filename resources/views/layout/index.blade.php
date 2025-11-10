@@ -32,17 +32,21 @@
   <link href="/assets/css/nucleo-svg.css" rel="stylesheet" />
 
   <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
-  <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"
+    integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
   <link rel="stylesheet" href="https://cdn.datatables.net/2.3.1/css/dataTables.dataTables.css" />
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded" />
   <link id="pagestyle" href="/assets/css/material-dashboard.css?v=3.2.0" rel="stylesheet" />
 </head>
 
 <body class="g-sidenav-show  bg-gray-100">
-  <aside class="sidenav navbar navbar-vertical navbar-expand-xs border-radius-lg fixed-start ms-2  bg-white my-2" id="sidenav-main">
+  <aside class="sidenav navbar navbar-vertical navbar-expand-xs border-radius-lg fixed-start ms-2  bg-white my-2"
+    id="sidenav-main">
     <div class="sidenav-header">
-      <i class="fas fa-times p-3 cursor-pointer text-dark opacity-5 position-absolute end-0 top-0 d-none d-xl-none" aria-hidden="true" id="iconSidenav"></i>
-      <a class="navbar-brand px-4 py-3 m-0" href=" https://demos.creative-tim.com/material-dashboard/pages/dashboard " target="_blank">
+      <i class="fas fa-times p-3 cursor-pointer text-dark opacity-5 position-absolute end-0 top-0 d-none d-xl-none"
+        aria-hidden="true" id="iconSidenav"></i>
+      <a class="navbar-brand px-4 py-3 m-0" href=" https://demos.creative-tim.com/material-dashboard/pages/dashboard "
+        target="_blank">
         <img src="/assets/img/logo-ct-dark.png" class="navbar-brand-img" width="26" height="26" alt="main_logo">
         <span class="ms-1 text-sm text-dark">Creative Tim</span>
       </a>
@@ -50,105 +54,130 @@
     <hr class="horizontal dark mt-0 mb-2">
     <div class="collapse navbar-collapse  w-auto " id="sidenav-collapse-main">
       <ul class="navbar-nav">
-        
+
         @if (Auth::user() && Auth::user()->role === 'admin')
-        <li class="nav-item">
-          <a class="nav-link active bg-gradient-dark text-white" href="{{ route('admin.dashboard') }}">
-            <i class="material-symbols-rounded opacity-5">dashboard</i>
-            <span class="nav-link-text ms-1">Dashboard</span>
-          </a>
-        </li>
-        <li class="nav-item mt-1">
-          <!-- Accordion Header -->
-          <a class="nav-link text-dark d-flex justify-content-between align-items-center"
-            href="javascript:;" onclick="document.getElementById('kelolaUserMenu').classList.toggle('d-none')">
-            <div class="d-flex align-items-center">
-              <i class="material-symbols-rounded opacity-5">group</i>
-              <span class="nav-link-text ms-1">Kelola User</span>
-            </div>
-            <i class="material-symbols-rounded opacity-5">expand_more</i>
-          </a>
+          <li class="nav-item">
+            <a href="{{ route('admin.dashboard') }}"
+              class="nav-link text-dark {{ request()->routeIs('admin.dashboard*') ? 'active bg-gradient-dark text-white' : '' }}">
+              <i class="material-symbols-rounded opacity-5">dashboard</i>
+              <span class="nav-link-text ms-1">Dashboard</span>
+            </a>
+          </li>
+          <li class="nav-item mt-1">
+            <!-- Accordion Header -->
+            <a class="nav-link text-dark d-flex justify-content-between align-items-center" href="javascript:;"
+              onclick="document.getElementById('kelolaUserMenu').classList.toggle('d-none')">
+              <div class="d-flex align-items-center">
+                <i class="material-symbols-rounded opacity-5">group</i>
+                <span class="nav-link-text ms-1">Kelola User</span>
+              </div>
+              <i class="material-symbols-rounded opacity-5">expand_more</i>
+            </a>
 
-          <!-- Accordion Content -->
-          <ul class="nav flex-column ms-3 mt-1 {{ request()->routeIs('admin.siswa.index') || request()->routeIs('admin.siswa.index') ? '' : 'd-none' }}" id="kelolaUserMenu">
-            <li class="nav-item">
-              <a href="{{ route('admin.siswa.index') }}"
-                class="nav-link text-dark {{ request()->routeIs('admin.siswa.index*') ? 'active bg-gradient-dark text-white' : '' }}">
-                <i class="material-symbols-rounded opacity-5">person</i>
-                <span class="nav-link-text ms-1">Kelola Siswa</span>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a href="{{ route('admin.pembimbing.index') }}"
-                class="nav-link text-dark {{ request()->routeIs('admin.pembimbing.index*') ? 'active bg-gradient-dark text-white' : '' }}">
-                <i class="material-symbols-rounded opacity-5">person</i>
-                <span class="nav-link-text ms-1">Kelola Pembimbing</span>
-              </a>
-            </li>
-          </ul>
-        </li>
+            <!-- Accordion Content -->
+            <ul
+              class="nav flex-column ms-3 mt-1 {{ request()->routeIs('admin.siswa.index') || request()->routeIs('admin.siswa.index') ? '' : 'd-none' }}"
+              id="kelolaUserMenu">
+              <li class="nav-item">
+                <a href="{{ route('admin.siswa.index') }}"
+                  class="nav-link text-dark {{ request()->routeIs('admin.siswa.*') ? 'active bg-gradient-dark text-white' : '' }}">
+                  <i class="material-symbols-rounded opacity-5">person</i>
+                  <span class="nav-link-text ms-1">Kelola Siswa</span>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{{ route('admin.pembimbing.index') }}"
+                  class="nav-link text-dark {{ request()->routeIs('admin.pembimbing.*') ? 'active bg-gradient-dark text-white' : '' }}">
+                  <i class="material-symbols-rounded opacity-5">person</i>
+                  <span class="nav-link-text ms-1">Kelola Pembimbing</span>
+                </a>
+              </li>
+            </ul>
+          </li>
 
-        <li class="nav-item">
-          <a href="{{ route('admin.jurusan.index') }}"
-                class="nav-link text-dark {{ request()->routeIs('admin.jurusan.index*') ? 'active bg-gradient-dark text-white' : '' }}">
-            <i class="material-symbols-rounded opacity-5">receipt_long</i>
-            <span class="nav-link-text ms-1">Kelola Jurusan</span>
-          </a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link text-dark" href="{{ route('admin.kelas.index') }}">
-            <i class="material-symbols-rounded opacity-5">co_present</i>
-            <span class="nav-link-text ms-1">Kelola Kelas</span>
-          </a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link text-dark" href="{{ route('admin.dudi.index') }}">
-            <i class="material-symbols-rounded opacity-5">co_present</i>
-            <span class="nav-link-text ms-1">Kelola Dudi</span>
-          </a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link text-dark" href="{{ route('admin.kegiatan.index') }}">
-            <i class="material-symbols-rounded opacity-5">co_present</i>
-            <span class="nav-link-text ms-1">Kelola Kegiatan</span>
-          </a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link text-dark" href="{{ route('admin.absensi.index') }}">
-            <i class="material-symbols-rounded opacity-5">co_present</i>
-            <span class="nav-link-text ms-1">Kelola Absensi</span>
-          </a>
-        </li>
+          <li class="nav-item">
+            <a href="{{ route('admin.jurusan.index') }}"
+              class="nav-link text-dark {{ request()->routeIs('admin.jurusan.*') ? 'active bg-gradient-dark text-white' : '' }}">
+              <i class="material-symbols-rounded opacity-5">receipt_long</i>
+              <span class="nav-link-text ms-1">Kelola Jurusan</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="{{ route('admin.kelas.index') }}"
+              class="nav-link text-dark {{ request()->routeIs('admin.kelas.*') ? 'active bg-gradient-dark text-white' : '' }}">
+              <i class="material-symbols-rounded opacity-5">co_present</i>
+              <span class="nav-link-text ms-1">Kelola Kelas</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="{{ route('admin.dudi.index') }}"
+              class="nav-link text-dark {{ request()->routeIs('admin.dudi.*') ? 'active bg-gradient-dark text-white' : '' }}">
+              <i class="material-symbols-rounded opacity-5">co_present</i>
+              <span class="nav-link-text ms-1">Kelola Dudi</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="{{ route('admin.kegiatan.index') }}"
+              class="nav-link text-dark {{ request()->routeIs('admin.kegiatan.*') ? 'active bg-gradient-dark text-white' : '' }}">
+              <i class="material-symbols-rounded opacity-5">co_present</i>
+              <span class="nav-link-text ms-1">Kelola Kegiatan</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="{{ route('admin.absensi.index') }}"
+              class="nav-link text-dark {{ request()->routeIs('admin.absensi.*') ? 'active bg-gradient-dark text-white' : '' }}">
+              <i class="material-symbols-rounded opacity-5">co_present</i>
+              <span class="nav-link-text ms-1">Kelola Absensi</span>
+            </a>
+          </li>
         @endif
 
         @if (Auth::user() && Auth::user()->role === 'siswa')
-        <li class="nav-item">
-          <a class="nav-link active bg-gradient-dark text-white" href="{{ route('siswa.dashboard') }}">
-            <i class="material-symbols-rounded opacity-5">dashboard</i>
-            <span class="nav-link-text ms-1">Dashboard</span>
-          </a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link text-dark" href="{{ route('siswa.profil.index') }}">
-            <i class="material-symbols-rounded opacity-5">co_present</i>
-            <span class="nav-link-text ms-1">Kelola Profil</span>
-          </a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link text-dark" href="{{ route('siswa.kegiatan.index') }}">
-            <i class="material-symbols-rounded opacity-5">co_present</i>
-            <span class="nav-link-text ms-1">Kelola Kegiatan</span>
-          </a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link text-dark" href="{{ route('siswa.absensi.index') }}">
-            <i class="material-symbols-rounded opacity-5">co_present</i>
-            <span class="nav-link-text ms-1">Absensi</span>
-          </a>
-        </li>
+          <li class="nav-item">
+            <a href="{{ route('siswa.dashboard') }}"
+              class="nav-link text-dark {{ request()->routeIs('siswa.dashboard*') ? 'active bg-gradient-dark text-white' : '' }}">
+              <i class="material-symbols-rounded opacity-5">dashboard</i>
+              <span class="nav-link-text ms-1">Dashboard</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="{{ route('siswa.profil.index') }}"
+              class="nav-link text-dark {{ request()->routeIs('siswa.profil.index.*') ? 'active bg-gradient-dark text-white' : '' }}">
+              <i class="material-symbols-rounded opacity-5">co_present</i>
+              <span class="nav-link-text ms-1">Kelola Profil</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="{{ route('siswa.kegiatan.index') }}"
+              class="nav-link text-dark {{ request()->routeIs('siswa.kegiatan.*') ? 'active bg-gradient-dark text-white' : '' }}">
+              <i class="material-symbols-rounded opacity-5">assignment</i>
+              <span class="nav-link-text ms-1">Kelola Kegiatan</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="{{ route('siswa.absensi.index') }}"
+              class="nav-link text-dark {{ request()->routeIs('siswa.absensi.*') ? 'active bg-gradient-dark text-white' : '' }}">
+              <i class="material-symbols-rounded opacity-5">login</i>
+              <span class="nav-link-text ms-1">Kelola Absensi</span>
+            </a>
+          </li>
 
         @endif
-        
+
+        @if (Auth::user() && Auth::user()->role === 'pembimbing')
+          <li class="nav-item">
+            <a href="{{ route('pembimbing.dashboard') }}"
+              class="nav-link text-dark {{ request()->routeIs('pembimbing.dashboard*') ? 'active bg-gradient-dark text-white' : '' }}">
+              <i class="material-symbols-rounded opacity-5">dashboard</i>
+              <span class="nav-link-text ms-1">Dashboard</span>
+            </a>
+          </li>
+          
+
+        @endif
+
+
+
         <li class="nav-item">
           <a class="nav-link text-dark" href="../pages/virtual-reality.html">
             <i class="material-symbols-rounded opacity-5">view_in_ar</i>
@@ -194,7 +223,8 @@
   </aside>
   <main class="main-content position-relative max-height-vh-100 h-100 border-radius-lg ">
     <!-- Navbar -->
-    <nav class="navbar navbar-main navbar-expand-lg px-0 mx-3 shadow-none border-radius-xl" id="navbarBlur" data-scroll="true">
+    <nav class="navbar navbar-main navbar-expand-lg px-0 mx-3 shadow-none border-radius-xl" id="navbarBlur"
+      data-scroll="true">
       <div class="container-fluid py-1 px-3">
         <nav aria-label="breadcrumb">
           <ol class="breadcrumb bg-transparent mb-0 pb-0 pt-1 px-0 me-sm-6 me-5">
@@ -211,10 +241,13 @@
           </div>
           <ul class="navbar-nav d-flex align-items-center  justify-content-end">
             <li class="nav-item d-flex align-items-center">
-              <a class="btn btn-outline-primary btn-sm mb-0 me-3" target="_blank" href="https://www.creative-tim.com/builder?ref=navbar-material-dashboard">Online Builder</a>
+              <a class="btn btn-outline-primary btn-sm mb-0 me-3" target="_blank"
+                href="https://www.creative-tim.com/builder?ref=navbar-material-dashboard">Online Builder</a>
             </li>
             <li class="mt-1">
-              <a class="github-button" href="https://github.com/creativetimofficial/material-dashboard" data-icon="octicon-star" data-size="large" data-show-count="true" aria-label="Star creativetimofficial/material-dashboard on GitHub">Star</a>
+              <a class="github-button" href="https://github.com/creativetimofficial/material-dashboard"
+                data-icon="octicon-star" data-size="large" data-show-count="true"
+                aria-label="Star creativetimofficial/material-dashboard on GitHub">Star</a>
             </li>
             <li class="nav-item d-xl-none ps-3 d-flex align-items-center">
               <a href="javascript:;" class="nav-link text-body p-0" id="iconNavbarSidenav">
@@ -231,7 +264,8 @@
               </a>
             </li>
             <li class="nav-item dropdown pe-3 d-flex align-items-center">
-              <a href="javascript:;" class="nav-link text-body p-0" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+              <a href="javascript:;" class="nav-link text-body p-0" id="dropdownMenuButton" data-bs-toggle="dropdown"
+                aria-expanded="false">
                 <i class="material-symbols-rounded">notifications</i>
               </a>
               <ul class="dropdown-menu  dropdown-menu-end  px-2 py-3 me-sm-n4" aria-labelledby="dropdownMenuButton">
@@ -257,7 +291,8 @@
                   <a class="dropdown-item border-radius-md" href="javascript:;">
                     <div class="d-flex py-1">
                       <div class="my-auto">
-                        <img src="../assets/img/small-logos/logo-spotify.svg" class="avatar avatar-sm bg-gradient-dark  me-3 ">
+                        <img src="../assets/img/small-logos/logo-spotify.svg"
+                          class="avatar avatar-sm bg-gradient-dark  me-3 ">
                       </div>
                       <div class="d-flex flex-column justify-content-center">
                         <h6 class="text-sm font-weight-normal mb-1">
@@ -275,14 +310,19 @@
                   <a class="dropdown-item border-radius-md" href="javascript:;">
                     <div class="d-flex py-1">
                       <div class="avatar avatar-sm bg-gradient-secondary  me-3  my-auto">
-                        <svg width="12px" height="12px" viewBox="0 0 43 36" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+                        <svg width="12px" height="12px" viewBox="0 0 43 36" version="1.1"
+                          xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                           <title>credit-card</title>
                           <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
                             <g transform="translate(-2169.000000, -745.000000)" fill="#FFFFFF" fill-rule="nonzero">
                               <g transform="translate(1716.000000, 291.000000)">
                                 <g transform="translate(453.000000, 454.000000)">
-                                  <path class="color-background" d="M43,10.7482083 L43,3.58333333 C43,1.60354167 41.3964583,0 39.4166667,0 L3.58333333,0 C1.60354167,0 0,1.60354167 0,3.58333333 L0,10.7482083 L43,10.7482083 Z" opacity="0.593633743"></path>
-                                  <path class="color-background" d="M0,16.125 L0,32.25 C0,34.2297917 1.60354167,35.8333333 3.58333333,35.8333333 L39.4166667,35.8333333 C41.3964583,35.8333333 43,34.2297917 43,32.25 L43,16.125 L0,16.125 Z M19.7083333,26.875 L7.16666667,26.875 L7.16666667,23.2916667 L19.7083333,23.2916667 L19.7083333,26.875 Z M35.8333333,26.875 L28.6666667,26.875 L28.6666667,23.2916667 L35.8333333,23.2916667 L35.8333333,26.875 Z"></path>
+                                  <path class="color-background"
+                                    d="M43,10.7482083 L43,3.58333333 C43,1.60354167 41.3964583,0 39.4166667,0 L3.58333333,0 C1.60354167,0 0,1.60354167 0,3.58333333 L0,10.7482083 L43,10.7482083 Z"
+                                    opacity="0.593633743"></path>
+                                  <path class="color-background"
+                                    d="M0,16.125 L0,32.25 C0,34.2297917 1.60354167,35.8333333 3.58333333,35.8333333 L39.4166667,35.8333333 C41.3964583,35.8333333 43,34.2297917 43,32.25 L43,16.125 L0,16.125 Z M19.7083333,26.875 L7.16666667,26.875 L7.16666667,23.2916667 L19.7083333,23.2916667 L19.7083333,26.875 Z M35.8333333,26.875 L28.6666667,26.875 L28.6666667,23.2916667 L35.8333333,23.2916667 L35.8333333,26.875 Z">
+                                  </path>
                                 </g>
                               </g>
                             </g>
@@ -326,8 +366,7 @@
   <script src="../assets/js/plugins/perfect-scrollbar.min.js"></script>
   <script src="../assets/js/plugins/smooth-scrollbar.min.js"></script>
   <script src="../assets/js/plugins/chartjs.min.js"></script>
-  <script
-    src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"
     integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy"
     crossorigin="anonymous"></script>
   <script src="https://cdn.datatables.net/2.3.1/js/dataTables.js"></script>
@@ -347,7 +386,7 @@
           backgroundColor: "#43A047",
           data: [50, 45, 22, 28, 50, 60, 76],
           barThickness: 'flex'
-        }, ],
+        },],
       },
       options: {
         responsive: true,
@@ -436,7 +475,7 @@
           },
           tooltip: {
             callbacks: {
-              title: function(context) {
+              title: function (context) {
                 const fullMonths = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
                 return fullMonths[context[0].dataIndex];
               }
