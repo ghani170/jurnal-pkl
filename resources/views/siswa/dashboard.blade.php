@@ -60,8 +60,8 @@
 
 
   <div class="mb-1 mt-5 ps-3">
-    <h6 class="mb-1">Projects</h6>
-    <p class="text-sm">Architects design houses</p>
+    <h6 class="mb-1">Kegiatan</h6>
+    <p class="text-sm">Daftar kegiatan terbaru</p>
   </div>
   <div class="row">
     @foreach ($kegiatans as $k)
