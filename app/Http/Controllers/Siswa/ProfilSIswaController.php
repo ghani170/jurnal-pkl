@@ -10,6 +10,7 @@ use App\Models\Siswa;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 class ProfilSIswaController extends Controller
 {
@@ -59,30 +60,58 @@ class ProfilSIswaController extends Controller
         //
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
+
     public function update(Request $request, $id)
     {
-        $user = User::findOrFail($id);
-        $user->update([
-            'name' => $request->name,
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|unique:users,email,' . $id,
+            'foto' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
 
+        $user = User::findOrFail($id);
+
+        $userData =[
+            'name' => $request->name,
+            'email' => $request->email,
+        ];
+
+        if ($request->filled('password')) {
+            $userData['password'] = Hash::make($request->password);
+        }
+
+        $user->update($userData);
+
         $datasiswa = Siswa::where('id_siswa', $user->id)->first();
+
         if ($datasiswa) {
-            $datasiswa->update([
-                'id_kelas' => $request->id_kelas,
-                'id_jurusan' => $request->id_jurusan,
-                'id_dudi' => $request->id_dudi,
-                'id_pembimbing' => $request->id_pembimbing,
+            $updateDataSiswa = [
                 'tempat_lahir' => $request->tempat_lahir,
                 'tanggal_lahir' => $request->tanggal_lahir,
                 'alamat' => $request->alamat,
                 'golongan_darah' => $request->golongan_darah,
                 'no_telpon' => $request->no_telpon,
                 'gender' => $request->gender,
-            ]);
+            ];
+
+            if ($request->hasFile('foto')) {
+
+                if ($datasiswa->foto) {
+                    $old_path = public_path('uploads/profil/' . $datasiswa->foto);
+                    if (file_exists($old_path)) {
+                        unlink($old_path);
+                    }
+                }
+
+                $image = $request->file('foto');
+                $image_name = time() . '_' . $image->getClientOriginalName();
+
+                $image->move(public_path('uploads/profil'), $image_name);
+
+                $updateDataSiswa['foto'] = $image_name;
+            }
+
+            $datasiswa->update($updateDataSiswa);
         }
 
         return redirect()->route('siswa.profil.index')->with('success', 'Profil berhasil diupdate');

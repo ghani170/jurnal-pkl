@@ -25,6 +25,7 @@ return new class extends Migration
             $table->date('tanggal_lahir')->nullable();
             $table->text('alamat')->nullable();
             $table->string('golongan_darah', 10)->nullable();
+            $table->string('foto', 255)->nullable();
             $table->timestamps();
         });
     }

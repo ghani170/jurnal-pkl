@@ -27,7 +27,7 @@
 
   <!-- Fonts and icons -->
   <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Inter:300,400,500,600,700,900" />
-
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
   <link href="/assets/css/nucleo-icons.css" rel="stylesheet" />
   <link href="/assets/css/nucleo-svg.css" rel="stylesheet" />
 
@@ -142,7 +142,7 @@
           </li>
           <li class="nav-item">
             <a href="{{ route('siswa.profil.index') }}"
-              class="nav-link text-dark {{ request()->routeIs('siswa.profil.index.*') ? 'active bg-gradient-dark text-white' : '' }}">
+              class="nav-link text-dark {{ request()->routeIs('siswa.profil.*') ? 'active bg-gradient-dark text-white' : '' }}">
               <i class="material-symbols-rounded opacity-5">co_present</i>
               <span class="nav-link-text ms-1">Kelola Profil</span>
             </a>
@@ -172,53 +172,36 @@
               <span class="nav-link-text ms-1">Dashboard</span>
             </a>
           </li>
-          
-
+          <li class="nav-item">
+            <a href="{{ route('pembimbing.kegiatansiswa.index') }}"
+              class="nav-link text-dark {{ request()->routeIs('pembimbing.kegiatansiswa*') ? 'active bg-gradient-dark text-white' : '' }}">
+              <i class="material-symbols-rounded opacity-5">dashboard</i>
+              <span class="nav-link-text ms-1">Lihat Kegiatan Siswa</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="{{ route('pembimbing.absensisiswa.index') }}"
+              class="nav-link text-dark {{ request()->routeIs('pembimbing.absensisiswa*') ? 'active bg-gradient-dark text-white' : '' }}">
+              <i class="material-symbols-rounded opacity-5">dashboard</i>
+              <span class="nav-link-text ms-1">Lihat Absensi Siswa</span>
+            </a>
+          </li>
         @endif
-
-
-
-        <li class="nav-item">
-          <a class="nav-link text-dark" href="../pages/virtual-reality.html">
-            <i class="material-symbols-rounded opacity-5">view_in_ar</i>
-            <span class="nav-link-text ms-1">Virtual Reality</span>
-          </a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link text-dark" href="../pages/rtl.html">
-            <i class="material-symbols-rounded opacity-5">format_textdirection_r_to_l</i>
-            <span class="nav-link-text ms-1">RTL</span>
-          </a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link text-dark" href="../pages/notifications.html">
-            <i class="material-symbols-rounded opacity-5">notifications</i>
-            <span class="nav-link-text ms-1">Notifications</span>
-          </a>
-        </li>
-        <li class="nav-item mt-3">
-          <h6 class="ps-4 ms-2 text-uppercase text-xs text-dark font-weight-bolder opacity-5">Account pages</h6>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link text-dark" href="../pages/profile.html">
-            <i class="material-symbols-rounded opacity-5">person</i>
-            <span class="nav-link-text ms-1">Profile</span>
-          </a>
-        </li>
-        <li class="nav-item">
-          <form action="{{ route('logout') }}" method="post">
-            @csrf
-            <button type="submit" class="btn bg-gradient-danger w-100">Logout</button>
-          </form>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link text-dark" href="../pages/sign-up.html">
-            <i class="material-symbols-rounded opacity-5">assignment</i>
-            <span class="nav-link-text ms-1">Sign Up</span>
-          </a>
-        </li>
+        
       </ul>
     </div>
+
+    <div class="sidenav-footer position-absolute w-100 bottom-0">
+            <div class="mx-3">
+                <form action="{{ route('logout') }}" method="POST">
+                    @csrf
+                    <button type="submit" class="btn bg-gradient-danger w-100 mt-4 text-white">
+                        <i class="material-symbols-rounded me-1">logout</i>
+                        <span class="nav-link-text ms-1">Logout</span>
+                    </button>
+                </form>
+            </div>
+        </div>
 
   </aside>
   <main class="main-content position-relative max-height-vh-100 h-100 border-radius-lg ">
@@ -361,6 +344,7 @@
   </main>
 
   <!--   Core JS Files   -->
+     
   <script src="../assets/js/core/popper.min.js"></script>
   <script src="../assets/js/core/bootstrap.min.js"></script>
   <script src="../assets/js/plugins/perfect-scrollbar.min.js"></script>

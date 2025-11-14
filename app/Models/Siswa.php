@@ -20,6 +20,7 @@ class Siswa extends Model
         'tanggal_lahir',
         'alamat',
         'golongan_darah',
+        'foto',
     ];
 
     public function user(){

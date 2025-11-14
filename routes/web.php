@@ -10,7 +10,9 @@ use App\Http\Controllers\Admin\SiswaController;
 use App\Http\Controllers\AdminController;
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\Pembimbing\AbsensiSiswaController;
 use App\Http\Controllers\Pembimbing\DashboardPembimbingController;
+use App\Http\Controllers\Pembimbing\KegiatanSiswaController;
 use App\Http\Controllers\Siswa\AbsensiController;
 use App\Http\Controllers\Siswa\DashboardSiswaController;
 use App\Http\Controllers\Siswa\KegiatanController;
@@ -64,7 +66,8 @@ Route::prefix('siswa')->name('siswa.')->middleware(['auth', 'role:siswa'])->grou
 });
 Route::prefix('pembimbing')->name('pembimbing.')->middleware(['auth', 'role:pembimbing'])->group(function () {
     Route::get('/dashboard', [DashboardPembimbingController::class, 'index'])->name('dashboard');
-
+    Route::resource('kegiatansiswa', KegiatanSiswaController::class);
+    Route::resource('absensisiswa', AbsensiSiswaController::class);
 });
 
 
