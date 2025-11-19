@@ -12,7 +12,7 @@
     @if (session('success'))
       <div class="alert alert-success text-center small">{{ session('success') }}</div>
     @elseif (session('error'))
-      <div class="alert alert-danger text-center small">{{ session('error') }}</div>
+      <div class="alert alert-danger text-center text-white small">{{ session('error') }}</div>
     @endif
     <div class="table-responsive p-0">
       <table class="table align-items-center mb-0">

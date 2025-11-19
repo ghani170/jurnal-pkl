@@ -12,6 +12,6 @@ class Jurusan extends Model
 
     public function siswas()
     {
-        return $this->hasMany(Siswa::class, 'id_siswa');
+        return $this->hasMany(Siswa::class, 'id_jurusan');
     }
 }

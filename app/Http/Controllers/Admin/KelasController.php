@@ -48,8 +48,8 @@ class KelasController extends Controller
     }
 
     public function destroy(Kelas $kela){
-        $hasSiswa = Siswa::where('id_kelas', $kela->id)->exists();
-        if ($hasSiswa) {
+        
+        if ($kela->siswas()->count() > 0) {
             return redirect()->route('admin.kelas.index')->with('error', 'Kelas tidak dapat dihapus karena masih masih memiliki siswa.');
         }
         $kela->delete();

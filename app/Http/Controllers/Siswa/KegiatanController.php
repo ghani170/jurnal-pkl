@@ -17,11 +17,7 @@ class KegiatanController extends Controller
     {
         $user = Auth::user();
         $siswa = $user->siswa;
-        if (! $siswa) {
-            $kegiatan = collect() ;
-
-            return view('siswa.kegiatan.index', compact('kegiatan'));
-        }
+        
 
         $siswa = $user->siswa;
         $kegiatan = $siswa->kegiatan;

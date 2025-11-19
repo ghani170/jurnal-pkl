@@ -17,13 +17,7 @@ class DashboardSiswaController extends Controller
     {
         $user = Auth::user();
         $siswa = $user->siswa;
-        if (! $siswa) {
-            $totalKegiatan = 0 ;
-            $totalAbsensi = 0 ;
-            $kegiatans = collect() ; 
-
-            return view('siswa.dashboard', compact('totalKegiatan', 'totalAbsensi', 'kegiatans'));
-        }
+        
         $totalKegiatan = Kegiatan::where('id_siswa', Auth::user()->siswa->id)->count();
         $totalAbsensi = Absensi::where('id_siswa', Auth::user()->siswa->id)->count();
         $kegiatans = Kegiatan::where('id_siswa', Auth::user()->siswa->id)->orderBy('id', 'desc')->get();

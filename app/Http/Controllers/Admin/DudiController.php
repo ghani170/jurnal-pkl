@@ -66,6 +66,9 @@ class DudiController extends Controller
     }
 
     public function destroy(Dudi $dudi){
+        if ($dudi->siswa()->count() > 0) {
+            return redirect()->route('admin.dudi.index')->with('error', 'Dudi tidak dapat dihapus karena masih masih memiliki siswa.');
+        }
         $dudi->delete();
         return redirect()->route('admin.dudi.index');
     }

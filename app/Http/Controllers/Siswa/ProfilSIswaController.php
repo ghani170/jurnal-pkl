@@ -21,16 +21,7 @@ class ProfilSIswaController extends Controller
     {
         $user = Auth::user();
         $siswa = $user->siswa;
-        if (! $siswa) {
-            $user = Auth::user();
-            $datasiswa = null ;
-            $kela = collect() ;
-            $pembimbing = collect() ;
-            $jurusan = collect() ;
-            $dudi = collect() ;
-
-            return view('siswa.kelolaprofil.index', compact('user', 'datasiswa', 'kela', 'jurusan', 'pembimbing', 'dudi'));
-        }
+        
         $datasiswa = Siswa::where('id_siswa', $user->id)->first();
         $kela = Kelas::all();
         $pembimbing = User::where('role', 'pembimbing')->get();

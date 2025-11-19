@@ -48,8 +48,8 @@ class JurusanController extends Controller
     }
 
     public function destroy(Jurusan $jurusan){
-        $hasJurusan = Siswa::where('id_jurusan', $jurusan->id)->exists();
-        if ($hasJurusan) {
+        
+        if ($jurusan->siswas()->count() > 0) {
             return redirect()->route('admin.jurusan.index')->with('error', 'Jurusan tidak dapat dihapus karena masih masih memiliki siswa.');
         }
         $jurusan->delete();

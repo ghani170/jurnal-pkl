@@ -17,7 +17,7 @@ class Dudi extends Model
     ];
 
     public function siswa(){
-        return $this->hasMany(Siswa::class, 'id_siswa');
+        return $this->hasMany(Siswa::class, 'id_dudi');
     }
 
 }

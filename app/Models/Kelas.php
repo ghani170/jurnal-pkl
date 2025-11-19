@@ -10,7 +10,7 @@ class Kelas extends Model
         'kelas',
     ];
 
-    public function kelas(){
-        return $this->hasMany(Siswa::class, 'id_siswa');
+    public function siswas(){
+        return $this->hasMany(Siswa::class, 'id_kelas');
     }
 }
