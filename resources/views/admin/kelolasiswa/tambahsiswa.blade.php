@@ -1,5 +1,5 @@
 @extends('layout.index')
-
+@section('title', '')
 @section('content')
 
 <h2 class="text-secondary">Tambah Siswa</h2>
@@ -19,28 +19,40 @@
 
     <div class="mb-3">
       <label for="name">Nama</label>
-      <input type="text" name="name" id="name" value="{{ old('name') }}" class="form-control" placeholder="Nama lengkap" required>
+      <input type="text" name="name" id="name" value="{{ old('name') }}" class="form-control border p-2" placeholder="Nama lengkap">
+      @error('name')
+      <div class="text-danger mt-1">{{ $message }}</div>
+    @enderror
     </div>
 
     <div class="mb-3">
       <label for="email">Email</label>
-      <input type="email" name="email" id="email" value="{{ old('email') }}" class="form-control" placeholder="Email" required>
+      <input type="email" name="email" id="email" value="{{ old('email') }}" class="form-control border p-2" placeholder="Email">
+      @error('email')
+      <div class="text-danger mt-1">{{ $message }}</div>
+    @enderror
     </div>
 
     <div class="mb-3">
       <label for="password">Password</label>
-      <input type="password" name="password" id="password" class="form-control" placeholder="Password" required>
+      <input type="password" name="password" id="password" class="form-control border p-2" placeholder="Password">
+      @error('password')
+      <div class="text-danger mt-1">{{ $message }}</div>
+    @enderror
     </div>
 
 
     <div class="mb-3">
       <label for="nis_siswa">NIS</label>
-      <input type="text" name="nis_siswa" id="nis_siswa" value="{{ old('nis_siswa') }}" class="form-control" placeholder="NIS siswa">
+      <input type="text" name="nis_siswa" id="nis_siswa" value="{{ old('nis_siswa') }}" class="form-control border p-2" placeholder="NIS siswa">
+      @error('nis_siswa')
+      <div class="text-danger mt-1">{{ $message }}</div>
+    @enderror
     </div>
 
     <div class="mb-3">
       <label for="id_kelas">Kelas</label>
-      <select name="id_kelas" id="id_kelas" class="form-control">
+      <select name="id_kelas" id="id_kelas" class="form-control border p-2">
         <option value="">-- Pilih Kelas --</option>
         @isset($kela)
           @foreach($kela as $k)
@@ -48,11 +60,12 @@
           @endforeach
         @endisset
       </select>
+      
     </div>
 
     <div class="mb-3">
       <label for="id_jurusan">Jurusan</label>
-      <select name="id_jurusan" id="id_jurusan" class="form-control">
+      <select name="id_jurusan" id="id_jurusan" class="form-control border p-2">
         <option value="">-- Pilih Jurusan --</option>
         @isset($jurusan)
           @foreach($jurusan as $j)
@@ -64,7 +77,7 @@
 
     <div class="mb-3">
       <label for="id_dudi">Dudi</label>
-      <select name="id_dudi" id="id_dudi" class="form-control">
+      <select name="id_dudi" id="id_dudi" class="form-control border p-2">
         <option value="">-- Pilih Dudi --</option>
         @isset($dudi)
           @foreach($dudi as $d)
@@ -76,7 +89,7 @@
 
     <div class="mb-3">
       <label for="id_pembimbing">Pembimbing</label>
-      <select name="id_pembimbing" id="id_pembimbing" class="form-control">
+      <select name="id_pembimbing" id="id_pembimbing" class="form-control border p-2">
         <option value="">-- Pilih Pembimbing --</option>
         @isset($pembimbing)
           @foreach($pembimbing as $p)

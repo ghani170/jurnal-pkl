@@ -17,9 +17,9 @@ class DudiController extends Controller
         return view('admin.keloladudi.tambah');
     }
 
-    public function store(Request $request){
+    public function store(Request $request, Dudi $dudi){
         $data = $request->validate([
-            'nama_dudi' => 'required|string|max:150',
+            'nama_dudi' => 'required|string|max:150|unique:dudis,nama_dudi,' . $dudi->id,
             'jenis_usaha' => 'required|string|max:100',
             'alamat' => 'required|string|max:255',
             'kontak' => 'required|string|max:100',
@@ -45,7 +45,7 @@ class DudiController extends Controller
 
     public function update(Request $request, Dudi $dudi){
       $data = $request->validate([
-            'nama_dudi' => 'required|string|max:255' . $dudi->id,
+            'nama_dudi' => 'required|string|max:255|unique:dudis,nama_dudi,' . $dudi->id,
             'jenis_usaha' => 'required|string|max:100',
             'alamat' => 'required|string|max:255',
             'kontak' => 'required|string|max:100',

@@ -1,5 +1,5 @@
 @extends('layout.index')
-@section('title', 'Kelola Jurusan')
+@section('title', 'Kelola Dudi')
 
 @section('content')
 
@@ -9,6 +9,9 @@
 </div>
 
 <div class="card-body px-0 pb-2">
+  @if (session('success'))
+      <div class="alert alert-success small">{{ session('success') }}</div>
+    @endif
   <div class="table-responsive p-0">
     <table class="table align-items-center mb-0">
 

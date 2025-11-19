@@ -1,5 +1,5 @@
 @extends('layout.index')
-
+@section('title', 'Tambah Kelas')
 @section('content')
 
 <h2 class="text-secondary">Tambah Data Kelas</h2>

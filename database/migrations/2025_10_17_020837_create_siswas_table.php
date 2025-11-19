@@ -15,10 +15,10 @@ return new class extends Migration
             $table->id();
             $table->foreignId('id_siswa')->constrained('users')->onDelete('cascade');
             $table->string('nis_siswa')->unique();
-            $table->foreignId('id_kelas')->nullable()->constrained('kelas')->nullOnDelete();
-            $table->foreignId('id_jurusan')->nullable()->constrained('jurusans')->nullOnDelete();
-            $table->foreignId('id_dudi')->nullable()->constrained('dudis')->nullOnDelete();
-            $table->foreignId('id_pembimbing')->nullable()->constrained('users')->nullOnDelete();
+            $table->foreignId('id_kelas')->nullable()->constrained('kelas')->cascadeOnDelete();
+            $table->foreignId('id_jurusan')->nullable()->constrained('jurusans')->cascadeOnDelete();
+            $table->foreignId('id_dudi')->nullable()->constrained('dudis')->cascadeOnDelete();
+            $table->foreignId('id_pembimbing')->nullable()->constrained('users')->cascadeOnDelete();
             $table->enum('gender', ['laki_laki', 'perempuan'])->nullable();
             $table->string('no_telpon', 100)->nullable();
             $table->string('tempat_lahir', 100)->nullable();

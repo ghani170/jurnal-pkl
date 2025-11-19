@@ -21,7 +21,7 @@
   <link rel="apple-touch-icon" sizes="76x76" href="/assets/img/apple-icon.png">
   <link rel="icon" type="image/png" href="/assets/img/favicon.png">
   <title>
-    Dashboard
+    @yield('title')
   </title>
   <!--     Fonts and icons     -->
 
@@ -186,6 +186,14 @@
               <span class="nav-link-text ms-1">Lihat Absensi Siswa</span>
             </a>
           </li>
+          <li class="nav-item">
+            <a href="{{ route('pembimbing.lihatsiswa.index') }}"
+              class="nav-link text-dark {{ request()->routeIs('pembimbing.lihatsiswa*') ? 'active bg-gradient-dark text-white' : '' }}">
+              <i class="material-symbols-rounded opacity-5">dashboard</i>
+              <span class="nav-link-text ms-1">Lihat Siswa</span>
+            </a>
+          </li>
+
         @endif
         
       </ul>

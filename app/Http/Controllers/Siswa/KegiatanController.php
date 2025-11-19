@@ -16,6 +16,12 @@ class KegiatanController extends Controller
     public function index(Request $request)
     {
         $user = Auth::user();
+        $siswa = $user->siswa;
+        if (! $siswa) {
+            $kegiatan = collect() ;
+
+            return view('siswa.kegiatan.index', compact('kegiatan'));
+        }
 
         $siswa = $user->siswa;
         $kegiatan = $siswa->kegiatan;

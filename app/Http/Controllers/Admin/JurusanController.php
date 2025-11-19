@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Jurusan;
+use App\Models\Siswa;
 use Illuminate\Http\Request;
 
 class JurusanController extends Controller
@@ -17,9 +18,9 @@ class JurusanController extends Controller
         return view('admin.kelolajurusan.tambah');
     }
 
-    public function store(Request $request){
+    public function store(Request $request, Jurusan $jurusan){
         $data = $request->validate([
-            'jurusan' => 'required|string|max:255|unique:jurusans,jurusan',
+            'jurusan' => 'required|string|max:255|unique:jurusans,jurusan,' . $jurusan->id,
         ]);
 
         Jurusan::create([
@@ -47,6 +48,10 @@ class JurusanController extends Controller
     }
 
     public function destroy(Jurusan $jurusan){
+        $hasJurusan = Siswa::where('id_jurusan', $jurusan->id)->exists();
+        if ($hasJurusan) {
+            return redirect()->route('admin.jurusan.index')->with('error', 'Jurusan tidak dapat dihapus karena masih masih memiliki siswa.');
+        }
         $jurusan->delete();
         return redirect()->route('admin.jurusan.index')->with('success', 'jurusan berhasil dihapus');
     }

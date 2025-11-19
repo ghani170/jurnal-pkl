@@ -1,5 +1,5 @@
 @extends('layout.index')
-
+@section('title', 'Edit Data Siswa')
 @section('content')
 
 <h2 class="text-secondary">Edit Siswa</h2>
@@ -20,12 +20,12 @@
 
     <div class="mb-3">
       <label for="name">Nama</label>
-      <input type="text" name="name" id="name" value="{{ old('name', $siswa->name) }}" class="form-control mb-3 p-2 border" required>
+      <input type="text" name="name" id="name" value="{{ old('name', $siswa->name) }}" class="form-control mb-3 p-2 border">
     </div>
 
     <div class="mb-3">
       <label for="email">Email</label>
-      <input type="email" name="email" id="email" value="{{ old('email', $siswa->email) }}" class="form-control mb-3 p-2 border" required>
+      <input type="email" name="email" id="email" value="{{ old('email', $siswa->email) }}" class="form-control mb-3 p-2 border">
     </div>
 
     <div class="mb-3">

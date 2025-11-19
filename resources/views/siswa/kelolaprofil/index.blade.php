@@ -71,7 +71,7 @@
                                     <li class="list-group-item d-flex justify-content-between align-items-start px-0">
                                         <div class="me-auto">
                                             <div class="fw-bold text-label">NISN</div>
-                                            {{ Auth::user()->siswa->nis_siswa }}
+                                            {{ Auth::user()->siswa->nis_siswa ?? 'Belum ada NIS' }}
                                         </div>
                                     </li>
                                     <li class="list-group-item d-flex justify-content-between align-items-start px-0">
@@ -152,7 +152,7 @@
                                     </div>
                                     <div>
                                         <p class="mb-0 fw-bold">Nama Pembimbing</p>
-                                        <p class="mb-0 text-muted">{{ Auth::user()->siswa->pembimbing->name }}</p>
+                                        <p class="mb-0 text-muted">{{ Auth::user()->siswa->pembimbing->name ?? '-' }}</p>
                                     </div>
                                 </div>
                                 <div class="d-flex align-items-center mb-3">
@@ -161,7 +161,7 @@
                                     </div>
                                     <div>
                                         <p class="mb-0 fw-bold">Nama Dudi</p>
-                                        <p class="mb-0 text-muted">{{ Auth::user()->siswa->dudi->nama_dudi }}</p>
+                                        <p class="mb-0 text-muted">{{ Auth::user()->siswa->dudi->nama_dudi ?? '-'}}</p>
                                     </div>
                                 </div>
                                 <div class="d-flex align-items-center mb-3">
@@ -170,7 +170,7 @@
                                     </div>
                                     <div>
                                         <p class="mb-0 fw-bold">Nama Pimpinan</p>
-                                        <p class="mb-0 text-muted">{{ Auth::user()->siswa->dudi->nama_pimpinan }}</p>
+                                        <p class="mb-0 text-muted">{{ Auth::user()->siswa->dudi->nama_pimpinan ?? '-' }}</p>
                                     </div>
                                 </div>
                                 <div class="d-flex align-items-center">
@@ -179,7 +179,7 @@
                                     </div>
                                     <div>
                                         <p class="mb-0 fw-bold">Nama Pembimbing Dudi</p>
-                                        <p class="mb-0 text-muted">{{ Auth::user()->siswa->dudi->nama_pembimbing }}</p>
+                                        <p class="mb-0 text-muted">{{ Auth::user()->siswa->dudi->nama_pembimbing ?? '-' }}</p>
                                     </div>
                                 </div>
                             </div>
@@ -208,7 +208,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body p-4">
-                    <form action="{{ route('siswa.profil.update', $user->id) }}" method="POST" enctype="multipart/form-data">
+                    <form action="{{ route('siswa.profil.update', optional($user)->id ?? 0) }}" method="POST" enctype="multipart/form-data">
                         @csrf
                         @method('PUT')
                         
@@ -240,8 +240,9 @@
                             <div class="col-md-6">
                                 <label class="form-label text-label">Jenis Kelamin</label>
                                 <select name="gender" class="form-control">
-                                    <option value="laki_laki" {{ Auth::user()->siswa->gender == 'laki_laki' ? 'selected' : '' }}>Laki-laki</option>
-                                    <option value="perempuan" {{ Auth::user()->siswa->gender == 'perempuan' ? 'selected' : '' }}>Perempuan</option>
+                                  <option value="">Pilih Gender</option>
+                                    <option value="laki_laki" {{ optional(Auth::user()->siswa)->gender == 'laki_laki' ? 'selected' : ''  }}>Laki-laki</option>
+                                    <option value="perempuan" {{ optional(Auth::user()->siswa)->gender == 'perempuan' ? 'selected' : '' }}>Perempuan</option>
                                 </select>
                             </div>
                             
@@ -260,12 +261,12 @@
                             <!-- Baris 3: Tempat Lahir dan Tanggal Lahir -->
                             <div class="col-md-6">
                                 <label class="form-label text-label">Tempat Lahir</label>
-                                <input type="text" name="tempat_lahir" value="{{ Auth::user()->siswa->tempat_lahir }}"
+                                <input type="text" name="tempat_lahir" value="{{ Auth::user()->siswa->tempat_lahir ?? '' }}"
                                     class="form-control">
                             </div>
                             <div class="col-md-6">
                                 <label class="form-label text-label">Tanggal Lahir</label>
-                                <input type="date" name="tanggal_lahir" value="{{ Auth::user()->siswa->tanggal_lahir }}"
+                                <input type="date" name="tanggal_lahir" value="{{ Auth::user()->siswa->tanggal_lahir ?? '' }}"
                                     class="form-control">
                             </div>
                             
@@ -273,11 +274,11 @@
                             <div class="col-md-6">
                                 <label class="form-label text-label">Golongan Darah</label>
                                 <input type="text" name="golongan_darah"
-                                    value="{{ Auth::user()->siswa->golongan_darah }}" class="form-control">
+                                    value="{{ Auth::user()->siswa->golongan_darah ?? '' }}" class="form-control">
                             </div>
                             <div class="col-md-6">
                                 <label class="form-label text-label">No Telepon</label>
-                                <input type="text" name="no_telpon" value="{{ Auth::user()->siswa->no_telpon }}"
+                                <input type="text" name="no_telpon" value="{{ Auth::user()->siswa->no_telpon ?? '' }}"
                                     class="form-control">
                             </div>
                             
@@ -285,7 +286,7 @@
                             <div class="col-12">
                                 <label class="form-label text-label">Alamat</label>
                                 <textarea name="alamat" class="form-control"
-                                    rows="2">{{ Auth::user()->siswa->alamat }}</textarea>
+                                    rows="2">{{ Auth::user()->siswa->alamat ?? '' }}</textarea>
                             </div>
                             
                             <!-- Input yang didisable -->
@@ -308,7 +309,7 @@
                             <div class="col-md-6">
                                 <label class="form-label text-label">Pembimbing</label>
                                 <select name="id_pembimbing" class="form-control" disabled>
-                                    <option value="">Kosong</option>
+                                    
                                     @foreach ($pembimbing as $p)
                                         <option value="{{ $p->id }}" {{ Auth::user()->siswa->id_pembimbing == $p->id ? 'selected' : '' }}>{{ $p->name }}</option>
                                     @endforeach

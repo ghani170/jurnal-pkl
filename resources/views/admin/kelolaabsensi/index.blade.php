@@ -1,11 +1,10 @@
 @extends('layout.index')
-@section('title', 'Kelola Jurusan')
+@section('title', 'Lihat Absensi')
 
 @section('content')
 
 <div class="d-flex justify-content-between">
-  <h2 class="text-secondary">Data Dudi</h2>
-  <a href="{{ route('admin.dudi.create') }}" class="btn btn-primary">Create Jurusan</a>
+  <h2 class="text-secondary">Data Absensi Siswa</h2>
 </div>
 
 <div class="card-body px-0 pb-2">

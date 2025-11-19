@@ -59,19 +59,24 @@ Route::prefix('siswa')->name('siswa.')->middleware(['auth', 'role:siswa'])->grou
     // Absensi
     Route::resource('absensi', AbsensiController::class);
     Route::get('kegiatan/per-bulan', [KegiatanController::class, 'perBulan'])
-    ->name('kegiatan.perBulan');
-
-   
-
+        ->name('kegiatan.perBulan');
 });
 Route::prefix('pembimbing')->name('pembimbing.')->middleware(['auth', 'role:pembimbing'])->group(function () {
     Route::get('/dashboard', [DashboardPembimbingController::class, 'index'])->name('dashboard');
+
     Route::resource('kegiatansiswa', KegiatanSiswaController::class);
     Route::resource('absensisiswa', AbsensiSiswaController::class);
+    Route::resource('lihatsiswa', \App\Http\Controllers\Pembimbing\SiswaController::class);
+    Route::get('/lihatkegiatan/{id}', [\App\Http\Controllers\Pembimbing\SiswaController::class, 'siswakegiatan'])->name('siswa.kegiatan');
+    Route::get('/lihatabsensi/{id}', [\App\Http\Controllers\Pembimbing\SiswaController::class, 'siswaabsensi'])->name('siswa.absensi');
+    
+});
+Route::prefix('pembimbingDudi')->name('pembimbingDudi.')->middleware(['auth', 'role:pembimbing_dudi'])->group(function () {
+    Route::get('/dashboard', [DashboardPembimbingController::class, 'index'])->name('dashboard');
 });
 
 
- 
+
 
 Route::middleware('guest')->group(function () {
     Route::get('/', function () {
