@@ -5,18 +5,20 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Dudi;
 use App\Models\Jurusan;
+use App\Models\Kegiatan;
 use App\Models\Kelas;
 use App\Models\Siswa;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 
 class SiswaController extends Controller
 {
     public function index()
     {
         $siswa = Siswa::with('user', 'kelas', 'jurusan', 'dudi', 'pembimbing')->get();
-        
+
         return view('admin.kelolasiswa.kelolasiswa', compact('siswa'));
     }
 
@@ -25,7 +27,7 @@ class SiswaController extends Controller
         $kela = Kelas::all();
         $jurusan = Jurusan::all();
         $dudi = Dudi::all();
-        $pembimbing =  User::where('role', 'pembimbing')->get();
+        $pembimbing = User::where('role', 'pembimbing')->get();
         return view('admin.kelolasiswa.tambahsiswa', compact('kela', 'jurusan', 'dudi', 'pembimbing'));
     }
 
@@ -74,9 +76,9 @@ class SiswaController extends Controller
 
     public function edit($id)
     {
-        
+
         $siswa = User::findOrFail($id);
-        $datasiswa = Siswa::where('id_siswa', $siswa->id)->first(); 
+        $datasiswa = Siswa::where('id_siswa', $siswa->id)->first();
         $kela = Kelas::all();
         $jurusan = Jurusan::all();
         $dudi = Dudi::all();
@@ -84,7 +86,7 @@ class SiswaController extends Controller
 
         return view('admin.kelolasiswa.editsiswa', compact('siswa', 'datasiswa', 'kela', 'jurusan', 'dudi', 'pembimbing'));
     }
-    
+
     public function update(Request $request, User $siswa)
     {
         $request->validate([
@@ -118,11 +120,25 @@ class SiswaController extends Controller
             ]);
         }
 
-    return redirect()->route('admin.siswa.index')->with('success', 'Data siswa berhasil diupdate');
+        return redirect()->route('admin.siswa.index')->with('success', 'Data siswa berhasil diupdate');
     }
 
-    public function destroy($id){
-        $user = User::find($id);
+    public function destroy(Siswa $siswa)
+    {
+        $user = User::find($siswa->id_siswa);
+        $kegiatans = Kegiatan::where('id_siswa', $siswa->id)->get();
+        foreach ($kegiatans as $kegiatan) {
+            if ($kegiatan->dokumentasi) {
+                Storage::disk('public')->delete($kegiatan->dokumentasi);
+            }
+        }
+        if ($siswa->foto) {
+            $old_path = public_path('uploads/profil/' . $siswa->foto);
+            if (file_exists($old_path)) {
+                unlink($old_path);
+            }
+        }
+
         if ($user) {
             $user->delete();
             return redirect()->route('admin.siswa.index')->with('success', 'data siswa berhasil dihapus');

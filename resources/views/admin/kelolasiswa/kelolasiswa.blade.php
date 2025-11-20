@@ -38,7 +38,7 @@
             <a href="{{ route('admin.siswa.edit', $data->user->id) }}" class="text-black font-weight-bold text-xs btn btn-warning" data-toggle="tooltip" data-original-title="Edit user">
               Edit
             </a>
-            <form action="{{ route('admin.siswa.destroy', $data->user->id) }}"
+            <form action="{{ route('admin.siswa.destroy', $data->id) }}"
               method="POST"
               onsubmit="return confirm('Yakin ingin menghapus produk ini?')"
               style="display:inline;">

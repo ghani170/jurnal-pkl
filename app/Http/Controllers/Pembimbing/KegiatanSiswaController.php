@@ -16,7 +16,7 @@ class KegiatanSiswaController extends Controller
             ->whereHas('siswa', function ($query) {
                 $query->where('id_pembimbing', Auth::id());
             })
-            ->with('siswa.user'); // Pastikan relasi 'user' juga di-load untuk mengambil nama
+            ->orderByDesc('tanggal_kegiatan')->with('siswa.user'); // Pastikan relasi 'user' juga di-load untuk mengambil nama
 
         // 2. Tambahkan Filter Berdasarkan Nama Siswa
         if ($request->filled('nama_siswa')) {

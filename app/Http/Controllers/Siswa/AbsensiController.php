@@ -68,7 +68,7 @@ class AbsensiController extends Controller
     private function autoFillAbsensi($siswaId, $tanggalAbsenHariIni)
     {
         
-        $tanggalAwalPengecekan = Carbon::parse($tanggalAbsenHariIni)->subDays(27)->toDateString(); 
+        $tanggalAwalPengecekan = Carbon::parse($tanggalAbsenHariIni)->subDays(100)->toDateString(); 
         
         $tanggalAkhirPengecekan = Carbon::parse($tanggalAbsenHariIni)->subDay()->toDateString();
 

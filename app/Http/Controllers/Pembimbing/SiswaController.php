@@ -23,7 +23,7 @@ class SiswaController extends Controller
     public function siswakegiatan($id){
         $siswaId = Siswa::where('id', $id)->where('id_pembimbing', Auth::user()->id)->firstOrFail();
         $siswa = Siswa::findOrFail($id);
-        $kegiatans = Kegiatan::where('id_siswa', $id)->orderByDesc('tanggal_kegiatan')->get();
+        $kegiatans = Kegiatan::where('id_siswa', $id)->orderByDesc('tanggal_kegiatan')->orderByDesc('mulai_kegiatan')->get();
         return view('pembimbing.lihatsiswa.kegiatan', compact('kegiatans', 'siswa'));
     }
 
