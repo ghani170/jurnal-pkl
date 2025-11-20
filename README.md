@@ -1,61 +1,147 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# 📖 Jurnal PKL Digital - Sistem Manajemen Praktek Kerja Lapangan
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+## 🌟 Deskripsi Proyek
 
-## About Laravel
+**Jurnal PKL Digital** adalah sebuah sistem informasi berbasis *web* yang dikembangkan menggunakan *framework* **Laravel**. [cite_start]Tujuan utama proyek ini adalah untuk mendigitalisasi dan menyederhanakan proses administrasi dan monitoring kegiatan Praktek Kerja Lapangan (PKL) bagi siswa[cite: 12, 14, 24].
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+[cite_start]Aplikasi ini memfasilitasi tiga peran pengguna utama: **Admin**, **Pembimbing**, dan **Siswa** [cite: 2, 15, 19, 23][cite_start], memastikan alur kerja yang efisien mulai dari pengelolaan data master hingga pelaporan kegiatan dan absensi harian[cite: 16, 18, 20, 24].
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+---
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+## 🛠️ Fitur Utama
 
-## Learning Laravel
+[cite_start]Aplikasi ini dirancang dengan fitur *multi-role* yang spesifik untuk setiap pengguna[cite: 2]:
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+### [cite_start]👑 Admin (Administrator) [cite: 15]
+Admin memiliki kontrol penuh atas data master dan pelaporan sistem.
+* [cite_start]**Pengelolaan Data Master (CRUD)**: Users, biodata siswa, kelas, jurusan, dan DUDI[cite: 16].
+* [cite_start]**Dashboard Admin**[cite: 17]: Ringkasan data master dan statistik penting.
+* [cite_start]**Laporan & Monitoring**: Melihat laporan absensi dan kegiatan seluruh siswa[cite: 18].
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+### [cite_start]🧑‍🏫 Pembimbing (Guru Pembimbing) [cite: 19]
+Pembimbing berfokus pada validasi dan pengawasan kegiatan siswa.
+* [cite_start]**Dashboard Pembimbing**[cite: 21]: Ikhtisar kegiatan dan absensi siswa bimbingan.
+* [cite_start]**Validasi**: Mengkonfirmasi (validasi) kegiatan dan absensi siswa[cite: 20].
+* [cite_start]**Komentar/Catatan**: Mengomentari kegiatan siswa (mengisi `Catatan_pembimbing`)[cite: 12, 22].
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+### [cite_start]🧑‍💻 Siswa [cite: 23]
+Siswa bertanggung jawab untuk mencatat kegiatan PKL harian mereka.
+* [cite_start]**Dashboard Siswa**[cite: 25]: Melihat ringkasan progres PKL.
+* [cite_start]**Pengisian Data**: Mengisi biodata, laporan kegiatan, dan absensi harian[cite: 24].
+* [cite_start]**Melihat Catatan**: Melihat catatan atau komentar yang diberikan oleh Guru Pembimbing[cite: 26].
 
-## Laravel Sponsors
+---
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+## 💻 Instalasi dan Setup Proyek
 
-### Premium Partners
+Ikuti langkah-langkah di bawah ini untuk menjalankan proyek secara lokal:
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+### Prasyarat
+Pastikan sistem Anda sudah terinstal:
+* PHP (v8.0 atau lebih tinggi disarankan)
+* Composer
+* MySQL/MariaDB (atau database pilihan Anda)
+* Web Server (Apache/Nginx/XAMPP/Laragon)
 
-## Contributing
+### Langkah-langkah Instalasi
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+1.  **Clone Repository:**
+    ```bash
+    git clone [URL_REPOSITORY_ANDA]
+    cd nama-folder-proyek
+    ```
 
-## Code of Conduct
+2.  **Install Dependencies:**
+    Gunakan Composer untuk menginstal semua paket PHP yang dibutuhkan.
+    ```bash
+    composer install
+    ```
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+3.  **Konfigurasi Environment:**
+    * Buat file `.env` dari contoh yang ada:
+        ```bash
+        cp .env.example .env
+        ```
+    * Buka file `.env` dan atur konfigurasi database Anda:
+        ```dotenv
+        APP_NAME="Jurnal PKL Digital"
+        APP_ENV=local
+        APP_KEY= # Akan diisi pada langkah berikutnya
 
-## Security Vulnerabilities
+        DB_CONNECTION=mysql
+        DB_HOST=127.0.0.1
+        DB_PORT=3306
+        DB_DATABASE=[NAMA_DB_ANDA]
+        DB_USERNAME=[USER_DB_ANDA]
+        DB_PASSWORD=[PASS_DB_ANDA]
+        ```
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+4.  **Generate Application Key:**
+    ```bash
+    php artisan key:generate
+    ```
 
-## License
+5.  **Migrasi Database:**
+    Jalankan migrasi untuk membuat semua tabel.
+    ```bash
+    php artisan migrate
+    ```
+    **(Opsional: Jika Anda memiliki Seeder untuk data awal seperti akun Admin, jalankan: `php artisan db:seed`)*
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+6.  **Jalankan Server Lokal:**
+    ```bash
+    php artisan serve
+    ```
+    Aplikasi sekarang dapat diakses di `http://127.0.0.1:8000`.
+
+---
+
+## 🏗️ Struktur Database & Relasi
+
+Proyek ini menggunakan 7 tabel utama dengan relasi *Foreign Key* (FK) yang terstruktur.
+
+### 📝 Daftar Tabel & Kolom Kunci
+
+| Nama Tabel | Deskripsi | Kunci Utama (PK) | Kolom Penting |
+| :--- | :--- | :--- | :--- |
+| [cite_start]**`User`** [cite: 1, 2] | Menyimpan informasi login dan peran. | `id` (INT, AI) | [cite_start]`role` (`ENUM(‘admin’, ‘pembimbing’, ‘siswa’)`) [cite: 2] |
+| [cite_start]**`Kelas`** [cite: 3, 4] | Data master kelas. | `id` (INT, AI) | [cite_start]`kelas` (`VARCHAR`) [cite: 4] |
+| [cite_start]**`Jurusan`** [cite: 5, 6] | Data master jurusan. | `id` (INT, AI) | [cite_start]`jurusan` (`VARCHAR`) [cite: 6] |
+| [cite_start]**`Dudi`** [cite: 7, 8] | Data master Dunia Usaha/Industri. | `id` (INT, AI) | [cite_start]`nama_dudi` (`VARCHAR`) [cite: 8] |
+| [cite_start]**`Siswa`** [cite: 9, 10] | Biodata lengkap siswa PKL. | `id` (INT, AI) | [cite_start]`Id_siswa` (FK ke `User`), `Id_pembimbing` (FK ke `User`), `Id_dudi` (FK ke `Dudi`) [cite: 10] |
+| [cite_start]**`Kegiatan`** [cite: 11, 12] | Catatan kegiatan harian siswa. | `id` (INT, AI) | [cite_start]`Id_siswa` (FK ke `User`), `Keterangan_kegiatan` (`TEXT`), `Catatan_pembimbing` (`TEXT`) [cite: 12] |
+| [cite_start]**`Absensi`** [cite: 13, 14] | Catatan kehadiran/absensi siswa. | `id` (INT, AI) | [cite_start]`Id_siswa` (FK), `Jam_mulai`/`Jam_akhir` (`Timestamp`), `status` (`ENUM`) [cite: 14] |
+
+### Relasi Kunci (Foreign Keys)
+
+* [cite_start]**`Siswa`**: Berelasi dengan `User` (untuk role Siswa dan Pembimbing), `Kelas`, `Jurusan`, dan `Dudi`[cite: 10].
+* [cite_start]**`Kegiatan`**: Berelasi dengan `User` sebagai Siswa yang melakukan kegiatan[cite: 12].
+* [cite_start]**`Absensi`**: Berelasi dengan `Siswa`[cite: 14].
+
+---
+
+## 🤝 Kontribusi
+
+Jika Anda ingin berkontribusi pada proyek ini, silakan ikuti alur berikut:
+
+1.  *Fork* repositori ini.
+2.  Buat *branch* baru untuk fitur Anda (`git checkout -b feature/nama-fitur-baru`).
+3.  Lakukan *commit* perubahan Anda (`git commit -m 'feat: menambahkan fitur X'`).
+4.  *Push* ke *branch* Anda (`git push origin feature/nama-fitur-baru`).
+5.  Buka *Pull Request* (PR).
+
+---
+
+## 📜 Lisensi
+
+Proyek ini dilisensikan di bawah [Tipe Lisensi Anda, misalnya: MIT License].
+
+---
+
+## ✉️ Kontak
+
+Untuk pertanyaan, saran, atau masalah, silakan hubungi:
+
+* **[Nama Anda]**
+* **Email:** [Email Anda]
+* **[Link Portofolio/GitHub/LinkedIn Anda]**
