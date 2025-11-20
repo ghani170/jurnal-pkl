@@ -132,16 +132,9 @@ Jika Anda ingin berkontribusi pada proyek ini, silakan ikuti alur berikut:
 
 ---
 
-## 📜 Lisensi
-
-Proyek ini dilisensikan di bawah [Tipe Lisensi Anda, misalnya: MIT License].
-
----
 
 ## ✉️ Kontak
 
 Untuk pertanyaan, saran, atau masalah, silakan hubungi:
 
-* **[Nama Anda]**
-* **Email:** [Email Anda]
-* **[Link Portofolio/GitHub/LinkedIn Anda]**
+* **Ghani Rizky**
